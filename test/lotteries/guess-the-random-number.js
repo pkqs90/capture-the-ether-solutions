@@ -22,9 +22,9 @@ async function calculateHash(contract) {
     return result;
 }
 
-it("Solves Challenge", async function () {
+it("Solves GuessTheRandomNumberChallenge", async function () {
   const fixture = () => fixtureFactory("GuessTheRandomNumberChallenge", ethers.parseEther("1.0"));
-  const { contract } = await loadFixture(fixture);
+  const contract = await loadFixture(fixture);
 
   // Use 2 different ways to lookup the random number.
   //   1. Calculate it using the same formula as the smart contract, since blockhash and timestamp is accessible.

@@ -20,7 +20,7 @@ async function fixture() {
   return { cteContract, ncContract, owner, attacker };
 }
 
-it("Solves Challenge", async function () {
+it("Solves NicknameChallenge", async function () {
   const { cteContract, ncContract } = await loadFixture(fixture);
   const nickname = ethers.encodeBytes32String("random nickname");
   await cteContract.setNickname(nickname);
