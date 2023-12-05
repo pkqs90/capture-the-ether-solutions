@@ -9,7 +9,7 @@ it("Solves FiftyYearsChallenge", async function () {
 
   const ONE_DAY_IN_SECONDS = BigInt(24*60*60);
   console.log(await contract.head());
-  await contract.upsert(1, BigInt(2**256) - ONE_DAY_IN_SECONDS, {value: 1});
+  await contract.upsert(1, 2n**256n - ONE_DAY_IN_SECONDS, {value: 1});
   console.log(await contract.head());
 
   await contract.upsert(2, 0, {value: 2});
