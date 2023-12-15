@@ -1,11 +1,9 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 
 it("Solves FiftyYearsChallenge", async function () {
   const [attacker] = await ethers.getSigners();
-  const fixture = () => fixtureFactory("FiftyYearsChallenge", ethers.parseEther("1.0"), attacker);
-  const contract = await loadFixture(fixture);
+  const contract = await buildContract("FiftyYearsChallenge", ethers.parseEther("1.0"), attacker);
 
   const ONE_DAY_IN_SECONDS = BigInt(24*60*60);
   console.log(await contract.head());
@@ -19,8 +17,7 @@ it("Solves FiftyYearsChallenge", async function () {
   console.log(await contract.head());
 
   const address = await contract.getAddress();
-  const attackerFixture = () => fixtureFactory("FiftyYearsChallengeAttacker", 2, address);
-  await loadFixture(attackerFixture);
+  await buildContract("FiftyYearsChallengeAttacker", 2, address);
 
   await contract.withdraw(2);
 

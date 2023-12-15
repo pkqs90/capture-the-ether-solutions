@@ -1,11 +1,9 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 const assert = require('node:assert').strict;
 
 it("Solves TokenSaleChallenge", async function () {
-  const fixture = () => fixtureFactory("TokenSaleChallenge", ethers.parseEther("1.0"));
-  const contract = await loadFixture(fixture);
+  const contract = await buildContract("TokenSaleChallenge", ethers.parseEther("1.0"));
 
   const ONE_ETH = 10n**18n;
   const MAX_U256 =2n**256n;

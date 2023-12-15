@@ -1,12 +1,10 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 const assert = require('node:assert').strict;
 
 it("Solves DonationChallenge", async function () {
   const [, attacker] = await ethers.getSigners();
-  const fixture = () => fixtureFactory("DonationChallenge", ethers.parseEther("1.0"));
-  const contract = await loadFixture(fixture);
+  const contract = await buildContract("DonationChallenge", ethers.parseEther("1.0"));
 
   const attackerAddress = await attacker.getAddress();
   // 2**256 ~ 10**48, which means sentValueInWei ~10**-6.

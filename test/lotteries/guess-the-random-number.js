@@ -1,6 +1,5 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 const assert = require('node:assert').strict;
 
 async function calculateHash(contract) {
@@ -23,8 +22,7 @@ async function calculateHash(contract) {
 }
 
 it("Solves GuessTheRandomNumberChallenge", async function () {
-  const fixture = () => fixtureFactory("GuessTheRandomNumberChallenge", ethers.parseEther("1.0"));
-  const contract = await loadFixture(fixture);
+  const contract = await buildContract("GuessTheRandomNumberChallenge", ethers.parseEther("1.0"));
 
   // Use 2 different ways to lookup the random number.
   //   1. Calculate it using the same formula as the smart contract, since blockhash and timestamp is accessible.

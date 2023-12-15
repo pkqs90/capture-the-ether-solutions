@@ -1,8 +1,7 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
 
-async function fixture() {
-  const [owner, attacker] = await ethers.getSigners();
+async function deploy() {
+  const [owner] = await ethers.getSigners();
 
   const cteFactory = await ethers.getContractFactory("CaptureTheEther");
   const ncFactory = await ethers.getContractFactory("NicknameChallenge");
@@ -17,11 +16,11 @@ async function fixture() {
   // Attach to deployed NicknameChallenge contract.
   const ncContract = ncFactory.attach(challengeAddress);
 
-  return { cteContract, ncContract, owner, attacker };
+  return { cteContract, ncContract };
 }
 
 it("Solves NicknameChallenge", async function () {
-  const { cteContract, ncContract } = await loadFixture(fixture);
+  const { cteContract, ncContract } = await deploy();
   const nickname = ethers.encodeBytes32String("random nickname");
   await cteContract.setNickname(nickname);
   expect(await ncContract.isComplete()).to.equal(true);

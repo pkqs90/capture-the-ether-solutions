@@ -1,6 +1,5 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 const assert = require('node:assert').strict;
 
 function calculatePublicKey(tx) {
@@ -24,8 +23,7 @@ function calculatePublicKey(tx) {
 
 it("Solves GuessTheNewNumberChallenge", async function () {
   const [signer] = await ethers.getSigners();
-  const fixture = () => fixtureFactory("PublicKeyChallenge");
-  const contract = await loadFixture(fixture);
+  const contract = await buildContract("PublicKeyChallenge");  
   const address = signer.getAddress();
 
   // Dummy transaction.

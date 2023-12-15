@@ -1,13 +1,9 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 
 it("Solves GuessTheNewNumberChallenge", async function () {
-  const fixture = () => fixtureFactory("GuessTheNewNumberChallenge", ethers.parseEther("1.0"));
-  const contract = await loadFixture(fixture);
-
-  const attacterFixture = () => fixtureFactory("GuessTheNewNumberChallengeAttacker");
-  const attackerContract = await loadFixture(attacterFixture);
+  const contract = await buildContract("GuessTheNewNumberChallenge", ethers.parseEther("1.0"));
+  const attackerContract = await buildContract("GuessTheNewNumberChallengeAttacker");
 
   await attackerContract.attack(await contract.getAddress(), {
     value: ethers.parseEther("1.0")

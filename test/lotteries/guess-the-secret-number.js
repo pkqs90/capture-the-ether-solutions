@@ -1,11 +1,9 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 const assert = require('node:assert').strict;
 
 it("Solves GuessTheSecretNumberChallenge", async function () {
-  const fixture = () => fixtureFactory("GuessTheSecretNumberChallenge", ethers.parseEther("1.0"));
-  const contract = await loadFixture(fixture);
+  const contract = await buildContract("GuessTheSecretNumberChallenge", ethers.parseEther("1.0"));
 
   const expectedHash = "0xdb81b4d58595fbbbb592d3661a34cdca14d7ab379441400cbfa1b78bc447c365";
   let x = -1;

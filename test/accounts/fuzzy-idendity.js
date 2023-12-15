@@ -1,6 +1,5 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 const assert = require('node:assert').strict;
 
 function findSalt(signer, initCodeHash) {
@@ -35,9 +34,7 @@ async function calcAttackerContractInitCode(challengeAddress) {
 
 it("Solves FuzzyIdentityChallenge", async function () {
   const [attacker] = await ethers.getSigners();
-  const fixture = () => fixtureFactory("FuzzyIdentityChallenge");
-  const contract = await loadFixture(fixture);
-
+  const contract = await buildContract("FuzzyIdentityChallenge");
   const challengeAddress = await contract.getAddress();
 
   // Calculate initCode for FuzzyIdentityChallengeAttacker.
@@ -45,8 +42,7 @@ it("Solves FuzzyIdentityChallenge", async function () {
   const initCodeHash = ethers.keccak256(initCode);
 
   // Deploy FuzzyIdentityChallengeAttackerFactory contract.
-  const attackerFactoryFixture = () => fixtureFactory("FuzzyIdentityChallengeAttackerFactory");
-  const factoryContract = await loadFixture(attackerFactoryFixture);
+  const factoryContract = await buildContract("FuzzyIdentityChallengeAttackerFactory");
   const factoryContractAddress = await factoryContract.getAddress();
 
   // Calculate salt.

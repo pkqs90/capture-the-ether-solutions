@@ -1,13 +1,11 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { setBalance } = require('@nomicfoundation/hardhat-network-helpers');
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 const assert = require('node:assert').strict;
 
 it("Solves AccountTakeoverChallenge", async function () {
   const [signer] = await ethers.getSigners();
-  const fixture = () => fixtureFactory("AccountTakeoverChallenge");
-  const contract = await loadFixture(fixture);
+  const contract = await buildContract("AccountTakeoverChallenge");
   const address = signer.getAddress();
 
   // One can recover the private key due to ECDSA `k` collision.

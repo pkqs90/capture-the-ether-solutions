@@ -1,12 +1,10 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 const assert = require('node:assert').strict;
 
 it("Solves MappingChallenge", async function () {
-  const fixture = () => fixtureFactory("MappingChallenge");
-  const contract = await loadFixture(fixture);
-
+  const contract = await buildContract("MappingChallenge");
+  
   // Array data is stored in keccak256(p), keccak256(p)+1, keccak256(p)+2, ... where p is the allocated slot in the order of variable declatarion.
   // https://docs.soliditylang.org/en/v0.8.23/internals/layout_in_storage.html#mappings-and-dynamic-arrays
   const startingPosition = BigInt(ethers.solidityPackedKeccak256(["uint256"], [1]));

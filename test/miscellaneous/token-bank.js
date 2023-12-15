@@ -1,11 +1,9 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 
 it("Solves TokenBankChallenge", async function () {
   const [, attacker] = await ethers.getSigners();
-  const fixture = () => fixtureFactory("TokenBankChallenge", 0, attacker);
-  const bankContract = await loadFixture(fixture);
+  const bankContract = await buildContract("TokenBankChallenge", 0, attacker);
   const bankContractConnectedToAttacker = bankContract.connect(attacker);
 
   // Get address of bank and token contract.
@@ -18,8 +16,7 @@ it("Solves TokenBankChallenge", async function () {
   const tokenContractConnectedToAttacker = tokenContract.connect(attacker);
 
   // Deploy attacker contract.
-  const attackerFixture = () => fixtureFactory("TokenBankChallengeAttacker", 0, tokenAddress, bankAddress);
-  const attackerContract = await loadFixture(attackerFixture);
+  const attackerContract = await buildContract("TokenBankChallengeAttacker", 0, tokenAddress, bankAddress);
 
   // Withdraw attacker's balance from bank and transfer to attacker contract.
   const balance = await bankContract.balanceOf(await attacker.getAddress());

@@ -1,16 +1,13 @@
-const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { expect } = require("chai");
-const { fixtureFactory } = require("../utils");
+const { buildContract } = require("../utils");
 const assert = require('node:assert').strict;
 
 it("Solves RetirementFundChallenge", async function () {
   const [, attacker] = await ethers.getSigners();
-  const fixture = () => fixtureFactory("RetirementFundChallenge", ethers.parseEther("1.0"), attacker);
-  const contract = await loadFixture(fixture);
-
+  const contract = await buildContract("RetirementFundChallenge", ethers.parseEther("1.0"), attacker);
+  
   const address = await contract.getAddress();
-  const attackerFixture = () => fixtureFactory("RetirementFundChallengeAttacker", ethers.parseEther("0.001"), address);
-  await loadFixture(attackerFixture);
+  await buildContract("RetirementFundChallengeAttacker", ethers.parseEther("0.001"), address);
 
   // Switch to attacker context.
   const contractConnectedToAttacker = contract.connect(attacker);
