@@ -33,6 +33,8 @@ async function calcAttackerContractInitCode(challengeAddress) {
 }
 
 it("Solves FuzzyIdentityChallenge", async function () {
+  // This challenge should be run independently instead of running in batch with other tests since the `challengeAddress` would not be the same
+  // due to different nonces the signer has deployed.
   const [attacker] = await ethers.getSigners();
   const contract = await buildContract("FuzzyIdentityChallenge");
   const challengeAddress = await contract.getAddress();
