@@ -7,7 +7,7 @@ it("Solves DonationChallenge", async function () {
   const contract = await buildContract("DonationChallenge", ethers.parseEther("1.0"));
 
   const attackerAddress = await attacker.getAddress();
-  // 2**256 ~ 10**48, which means sentValueInWei ~10**-6.
+  // 2**160 ~ 10**48, which means sentValueInWei ~10**-6.
   const sentValueInWei = BigInt(attackerAddress) / (10n ** 36n);
 
   // Since the storage location of `Donation` is on state instead of memory, we can override the `owner` slot by providing `etherAmount`.
